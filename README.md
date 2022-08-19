@@ -26,6 +26,8 @@ STEP - 일의 항목 <br>
 
 <b>정리 : 하나의 Job 은 여러개의 Step 으로 구성되어 있다. 하나의 Step 은 Tasklet(작업 내용) 을 가지고 있다.</b>
 
+### 2.1 Batch Config
+
 @EnableBatchProcessing
 - 스프링 배치가 작동하기 위해 선언해야 하는 어노테이션
 - 총 4개의 설정 클래스를 실행시키며 스프링 배치의 모든 초기화 및 실행 구성이 이루어진다.
@@ -46,4 +48,50 @@ STEP - 일의 항목 <br>
 
 - JpaBatchConfigurer
    * JPA 관련 객체를 생성하는 설정 클래스
+
+## Part2 스프링 배치 도메인 이해
+
+### 2.1 Job
+
+#### [그래서 Job 이 뭔데?]
+* Job 이란 배치 계층 구조에서 가장 상위에 있는 개념으로 하나의 배치작업 자체를 의미함
+    * ex) API 서버의 접속 로그 데이터를 통계 서버로 옮기는 배치 인 Job 자체를 의미한다.
+* Job Configuration 을 통해 생성되는 객체 단위로서 배치작업을 어떻게 구성하고 실행 한 것인지 전체적으로 설명하고 명세해 놓은 객체
+    * 즉, 하나의 '일' 이다.
+* 배치 Job 을 구성하기 위한 최상의 인터페이스이며 Spring Batch가 기본 구현체를 제공한다.
+
+* 하나의 Job 은 여러개의 Step 으로 구성 되어 있으며, 반드시 한개 이상의 Step 으로 구성해야 한다.
+
+
+#### [구현체]
+
+* SimpleJob
+    * 순차적으로 Step을 실행시키는 Job
+* FlowJob
+    * Job에 흐름에 있어서 step1 이후 step2 를 실행 시킬지 step3 를 실행 시킬지 특정 조건과 흐름에 딷라서 Step을 구성하여 실행시키는 Job
+    * Flow 객체를 실행시켜 작업을 진행한다.
+
+
+
+
+### 2.2 JobInstance
+
+
+### 2.3 JobParameter
+
+
+### 2.4 JobExecution
+
+### 2.5 Step
+
+### 2.6 StepExecution
+
+### 2.7 ExecutionContext
+
+### 2.8 JobRepository
+
+### 2.9 JobLauncher
+
+
+
 

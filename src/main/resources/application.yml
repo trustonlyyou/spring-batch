@@ -13,7 +13,7 @@ spring:
     hikari:
       jdbc-url: jdbc:mysql://localhost:3306/spring_batch?serverTimezone=UTC&allowMultiQueries=true
       username: root
-      password: jung344524
+      password: 1234
       driver-class-name: com.mysql.cj.jdbc.Driver
   batch:
     jdbc:
