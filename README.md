@@ -72,9 +72,19 @@ STEP - 일의 항목 <br>
     * Flow 객체를 실행시켜 작업을 진행한다.
 
 
-
-
 ### 2.2 JobInstance
+
+* [JobInstance] 
+  * Job이 실행될 때 생성되는 Job의 논리적 실행 단위 객체, 고유하게 식별 가능한 작업 실행을 나타낸다.
+  * Job의 설정과 구성 동일 but Job이 실행되는 시점에 처리하는 내용은 다르다 따라서 Job의 실행을 구분해야 한다.
+    * ex) 하루에 한 번씩 배치 Job이 실행된다면 매일 실행되는 각각의 Job을 JobInstance 로 표현한다.
+
+* JobInstance 생성 및 실행
+  * 처음 시작하는 Job + JobParameter 일 경우 새로운 JobInstance 생성
+  * 이전과 동일한 Job + JobParameter 으로 실행 할 경우 이미 존재하는 JobInstance return
+    * 내부적으로 JobName + jobKey (jobParameters 의 해시 값) 를 가지고 JobInstance 객체를 얻음
+
+* Job(1) : JobInstance(N) 관계
 
 
 ### 2.3 JobParameter
