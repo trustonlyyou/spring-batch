@@ -88,6 +88,22 @@ STEP - 일의 항목 <br>
 
 
 ### 2.3 JobParameter
+* [JobParameter]
+  * Job을 실행할 때 함께 포함되는 사용되는 파라미터를 가진 도메인 객체
+  * 하나의 Job에 존재할 수 있는 여러개의 JobInstance를 구분하기 위한 용도
+  * JobParameters와 JobInstance 는 1:1 관계
+
+* 새성 및 바인딩
+  * 어플리케이션 실행 시 주입
+    * java -jar LogBatch.jar requestData=20220827
+  * 코드로 생성
+    * JobParameterBuilder, DefaultJobParametersConverter
+  * SpEL 이용
+    * @Value("#{jobParameter[requestDate]}"), @JobScope, @StepScope 선언 필수
+  
+
+※ Test :: java -jar spring-batch-0.0.1-SNAPSHOT.jar 'name=user1 seq(long)=2L date(date)=2021/01/01 age(double)=16.5'
+
 
 
 ### 2.4 JobExecution

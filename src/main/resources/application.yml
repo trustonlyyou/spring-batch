@@ -18,5 +18,5 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
-    job:
-      enabled: false # Job이 자동실행 되는 것을 막기위해서 (Part2 JobInstance 관련 테스트)
+#    job:
+#      enabled: false # Job이 자동실행 되는 것을 막기위해서 (Part2 JobInstance 관련 테스트)
