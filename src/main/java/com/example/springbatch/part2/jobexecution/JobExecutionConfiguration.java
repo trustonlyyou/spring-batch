@@ -1,8 +1,7 @@
-package com.example.springbatch.part2;
+package com.example.springbatch.part2.jobexecution;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -13,12 +12,9 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Map;
-
 @Configuration
 @RequiredArgsConstructor
-public class JobParameterConfiguration {
-
+public class JobExecutionConfiguration {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
@@ -34,41 +30,27 @@ public class JobParameterConfiguration {
 
     @Bean
     public Step step1() {
-        return stepBuilderFactory.get("step1")
-                .tasklet(new Tasklet() {
-                    @Override
-                    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
-
-                        JobParameters jobParameters = stepContribution.getStepExecution().getJobExecution().getJobParameters();
-
-                        // jobParameters 를 받 을 수 있다.
-                        jobParameters.getString("name");
-                        jobParameters.getLong("seq");
-                        jobParameters.getDate("date");
-                        jobParameters.getDouble("age");
-
-                        System.out.println(jobParameters.toString());
-
-//                         jobParameters 를 받 을 수 있다.
-//                        Map<String, Object> map = chunkContext.getStepContext().getJobParameters();
-
-                        return RepeatStatus.FINISHED;
-                    }
+        return stepBuilderFactory.get("step2")
+                .tasklet((stepContribution, chunkContext) -> {
+                    System.out.println("step1 has executed");
+                    return RepeatStatus.FINISHED;
                 })
                 .build();
     }
 
     @Bean
     public Step step2() {
-        return stepBuilderFactory.get("step2")
+        return stepBuilderFactory.get("step1")
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
                         System.out.println("step2 was executed");
-                        return RepeatStatus.FINISHED;
+//                        throw new RuntimeException("step2 has filed"); // batch status = failed
+                        // CONTINUABLE 가 아닐 경우 job_execution 은 계속 생성되, 테이블에 저장이 된다.
+
+                        return RepeatStatus.FINISHED; // A job instance already exists 예외가 발생하지 않
                     }
                 })
                 .build();
     }
-
 }
