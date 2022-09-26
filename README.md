@@ -140,9 +140,19 @@ STEP - 일의 항목 <br>
   * Step 내에서 Flow 를 실행하도록 한다
 
 
-
-
 ### 2.6 StepExecution
+
+* [StepExecution]
+  * Step 에 대한 한번의 시도를 의미하는 객체로서 Step 실행 중에 발생한 정보들을 저장하고 있는 객체
+    * 시작시간, 종료시간, 상태(시작됨, 완료, 실패), commit, count, rollback count 등의 속성을 가짐
+  * Step 이 매번 시도될 때 마다 생성되며 각 Step 별로 생성된다.
+  * Job 이 재시작 하더라도 이미 성공적으로 완료된 Step 은 재 실행 되지 않고 실패한 Step 만 실행된다
+  * 이전 단계 Step이 실패해서 현재 Step을 실행하지 않았다면 StepExecution을 생성하지 않는다. Step이 실제로 시작됐을 때만 StepExecution을 실행한다.
+  * JobExecution 과의 관계
+    * Step의 StepExecution이 모두 정상적으로 완료 되어야 JobExecution 이 정상적으로 완료된다.
+    * Step의 StepExecution 중 하나라도 실패하면 JobExecution 은 실패한다.
+
+
 
 ### 2.7 ExecutionContext
 
